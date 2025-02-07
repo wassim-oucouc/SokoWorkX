@@ -1,6 +1,5 @@
 <?php
-// include('../app/core/Database.php');
-
+include('../app/core/Database.php');
 
 
 ?>

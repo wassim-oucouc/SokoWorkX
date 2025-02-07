@@ -7,7 +7,7 @@ class Database {
     private static $port = "5555";
     private static $username= "postgres";
     private static $password = "123123";
-    private static $dbname = "SokoDB";
+    private static $dbname = "sokoworksxdb";
     private static $connexion;
     private static $instance;
    

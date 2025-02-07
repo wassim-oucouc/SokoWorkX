@@ -1,8 +1,7 @@
 -- Active: 1738760277772@@127.0.0.1@5555@mvc
 
-create DATABASE MVC;
+create database SokoWorksXdb;
 
-use mvc;
 
 create table Utilisateurs(
     id SERIAL PRIMARY KEY,
