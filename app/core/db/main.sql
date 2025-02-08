@@ -67,13 +67,14 @@ CREATE TABLE Offers(
     Foreign Key (id_publication) REFERENCES Publication(id)
 )
 
-CREATE TABLE Compétences_Publication(
+CREATE TABLE Compétences_Freelancer(
     id SERIAL PRIMARY KEY,
+    id_freelancer INTEGER,
     id_compétences INTEGER,
-    id_publication INTEGER,
-    Foreign Key (id_compétences) REFERENCES Compétences(id),
-    Foreign Key (id_publication) REFERENCES Publication(id)
-)
+    Foreign Key (id_freelancer) REFERENCES users(id),
+    Foreign Key (id_compétences) REFERENCES users(id)
+
+);
 
 CREATE TABLE Evaluation(
     id  SERIAL PRIMARY KEY,
