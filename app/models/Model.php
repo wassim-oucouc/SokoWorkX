@@ -104,28 +104,27 @@ abstract class Model{
             // var_dump($result);
             // die();
 
-            return $result ;
+
         }catch(PDOException $e){
             echo("Error:" . $e);
         }
+        return $result ;
     }
 
-    public function getById($tablename,$id){
+    public function getById($tablename,$id)
+    {
 
-        try{
-            $query="SELECT * FROM " . $tablename . " WHERE id = " . $id . " ;";
+        try {
+            $query = "SELECT * FROM " . $tablename . " WHERE id = " . $id . " ;";
             $stmt = Database::getInstance()->getConnection()->prepare($query);
-            $stmt -> execute();
+            $stmt->execute();
             //  var_dump($query);
-            $result = $stmt->fetchObject(substr($tablename,0,-1));
-             var_dump($result);
-             die();
-            return $result ;
-        }catch(PDOException $e){
+            $result = $stmt->fetchObject(substr($tablename, 0, -1));
+
+            return $result;
+        } catch (PDOException $e) {
             echo("Error:" . $e);
         }
-
-
 
     }
 

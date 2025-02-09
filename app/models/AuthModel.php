@@ -34,9 +34,9 @@ class authModel{
 
 
 
-    public function login(RegisterForm $form) {
+    public function login(LoginForm $form) {
         $this->user->instance($form->Email,$form->password);
-        $user = $this->u->findByEmailAndPassword($this->user);
+        $user = $this->user->findByEmailAndPassword($this->user);
         // var_dump($user);
         // die;
         if ($user->getId() == 0) {
@@ -60,13 +60,13 @@ class authModel{
 
 
 
-    private function validationString(string $string){
+    private function validationString(string $string):bool{
         if (empty($string) || $string == null || is_null($string)) {
             return false;
         }
         return true;
     }
-    public function passwordValidation(string $password, string $passwordConfirmation) {
+    public function passwordValidation(string $password, string $passwordConfirmation):bool {
         if ($password != $passwordConfirmation) {
             throw new Exception("les mots de passe sont pas les mêmes");
         }

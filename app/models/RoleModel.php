@@ -64,4 +64,20 @@ class Role extends Model {
         return "(Role) => id : " . $this->id . " , name : " . $this->name . " , description : " . $this ->Description . " , logo : " . $this ->Logo ."";
     }
 
+    public function getById($tablename, $id): Role
+    {
+        try {
+            return parent::getById($tablename, $id);
+        }
+        catch (Exception $e){
+            echo'user not found:'.$e;
+            return new Role();
+        }
+    }
+
+    public function getRoleById($RoleId): Role
+    {
+    return $this->getById('Roles', $RoleId);
+    }
+
 }

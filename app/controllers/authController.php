@@ -27,15 +27,17 @@ class authController{
 
         try {
             $user = $this->authModel->login($logInForm);
+            return $user;
         } catch (Exception $e) {
             echo"error!:".$e;
         }
+
         header('location: dashboard');
     }
 
 }
 
-?>
+
 
 
 ?>

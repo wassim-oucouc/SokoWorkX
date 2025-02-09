@@ -1,7 +1,8 @@
 <?php
 
 include_once ('Model.php');
-class Utilisateur extends Model{
+class Utilisateur extends Model
+{
 
     private int $id = 0;
     private string $name;
@@ -10,13 +11,14 @@ class Utilisateur extends Model{
     private string $password;
     private string $phone;
     private string $photo;
-    private  Role $role;
-    private int $roleId=1;
+    private Role $role;
+    private int $roleId = 1;
     private $tablename = "utilisateurs";
 
-    public function __construct () {
-       parent::__construct();
-       $this->role = new Role();
+    public function __construct()
+    {
+        parent::__construct();
+        $this->role = new Role();
     }
 //    public function create($tablename,$params)
 //    {
@@ -24,8 +26,7 @@ class Utilisateur extends Model{
 //    }
 
 
-
-    public  function __call($name, $arguments)
+    public function __call($name, $arguments)
     {
         if ($name = "instance") {
             if (count($arguments) == 8) {
@@ -55,106 +56,131 @@ class Utilisateur extends Model{
     }
 
 
-
-    public function setRole(Role $role){
-        $this -> role = $role;
+    public function setRole(Role $role)
+    {
+        $this->role = $role;
     }
-    public function setId(int $id): void {
+
+    public function setId(int $id): void
+    {
         $this->id = $id;
     }
 
-    public function setFirstname(string $firstname): void {
+    public function setFirstname(string $firstname): void
+    {
         $this->name = $firstname;
     }
 
-    public function setLastname(string $lastname): void {
+    public function setLastname(string $lastname): void
+    {
         $this->lastName = $lastname;
     }
 
-    public function setEmail(string $email) :void {
+    public function setEmail(string $email): void
+    {
         $this->email = $email;
     }
 
-    public function setPassword(string $password): void {
+    public function setPassword(string $password): void
+    {
         $this->password = $password;
     }
-    public function setPhone(string $phone):void {
+
+    public function setPhone(string $phone): void
+    {
         $this->phone = $phone;
     }
 
-    public function setPhoto(string $photo):void {
+    public function setPhoto(string $photo): void
+    {
         $this->photo = $photo;
     }
 
-    public function setRoleId(int $id){
-        $this ->roleId=$id;
+    public function setRoleId(int $id)
+    {
+        $this->roleId = $id;
     }
-    public function getId(): int{
+
+    public function getId(): int
+    {
         return $this->id;
     }
 
-    public function getname(): string {
+    public function getname(): string
+    {
         return $this->name;
     }
 
-    public function getLastname(): string {
+    public function getLastname(): string
+    {
         return $this->lastName;
     }
 
-    public function getEmail(): string {
+    public function getEmail(): string
+    {
         return $this->email;
     }
 
-    public function getPhone(): string {
+    public function getPhone(): string
+    {
         return $this->phone;
     }
 
-    public function getPassword(): string {
+    public function getPassword(): string
+    {
         return $this->password;
     }
 
-    public function getRole():Role {
+    public function getRole(): Role
+    {
         return $this->role;
     }
 
-    public function getCours(): array {
+    public function getCours(): array
+    {
         return $this->cours;
     }
 
-    public function getPhoto(): string {
+    public function getPhoto(): string
+    {
         return $this->photo;
     }
 
-    public function getRoleId(){
-        return $this -> roleId;
+    public function getRoleId()
+    {
+        return $this->roleId;
     }
 
 
-
-    public function toStringWithFirstnameAndLastname() {
-        return "(Utilisateur) => id : " . $this->id . " , firstname : " . $this->name . " , lastname : " . $this->lastName ;
+    public function toStringWithFirstnameAndLastname()
+    {
+        return "(Utilisateur) => id : " . $this->id . " , firstname : " . $this->name . " , lastname : " . $this->lastName;
     }
 
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->toStringWithFirstnameAndLastname() .
-            " , phone : " .$this->phone . " , email : " . $this->email  . " , password : " . $this->password . " photo : " . $this->photo . " , Role : " . $this->role . " , Role_ID : " . $this->roleId ;
+            " , phone : " . $this->phone . " , email : " . $this->email . " , password : " . $this->password . " photo : " . $this->photo . " , Role : " . $this->role . " , Role_ID : " . $this->roleId;
     }
 
 
-    public function create($tablename,$params){
+    public function create($tablename, $params)
+    {
 
         parent::create($this->tablename, $params);
     }
-    public function createUser(Utilisateur $utilisateur):Utilisateur{
-        $params=[
-            'name'=>$utilisateur->getname(),
-            'lastName'=>$utilisateur->getLastname(),
-            'email'=>$utilisateur->getEmail(),
-            'password'=>$utilisateur->getPassword(),
-            'phone'=>$utilisateur->getPhone(),
-            'roleId'=>$utilisateur->getRoleId(),
-            'photo'=>$utilisateur->getPhoto()
+
+    public function createUser(Utilisateur $utilisateur): Utilisateur
+    {
+        $params = [
+            'name' => $utilisateur->getname(),
+            'lastName' => $utilisateur->getLastname(),
+            'email' => $utilisateur->getEmail(),
+            'password' => $utilisateur->getPassword(),
+            'phone' => $utilisateur->getPhone(),
+            'roleId' => $utilisateur->getRoleId(),
+            'photo' => $utilisateur->getPhoto()
         ];
         $this->create($this->tablename, $params);
         $utilisateur->setRole($this->role->findByName($utilisateur->getRole()->getRoleName()));
@@ -162,36 +188,28 @@ class Utilisateur extends Model{
     }
 
 
+    public function getByEmailAndPassword($email, $password)
+    {
+        try {
+            $query = "SELECT id, name, lastName, email, phone, photo, roleId, password FROM utilisateurs WHERE email = '" . $email . "' AND password = '" . $password . "';";
+            $stmt = Database::getInstance()->getConnection()->prepare($query);
+            $stmt->execute();
+            $result = $stmt->fetchObject(Utilisateur::class);
 
+        } catch (PDOException $e) {
+            echo 'Error:' . $e;
+        }
+        if (!$result) {
+            return new Utilisateur();
+        } else {
+            return $result;
+        }
+    }
 
-//    public function getAll($tablename){
-//
-//        $users=parent::getAll($this->tablename);
-//        foreach($users as $user){
-//            $user->setRole($this->roleService->getRoleById($user->getRoleId()));
-//        }
-//        // var_dump($user);
-//        // die;
-//        return $users;
-//
-//    }
-//
-//    public function findByEmailAndPassword(Utilisateur $user)
-//    {
-//        $this->user= $this->userRepository->findByEmailAndPassword($user->getEmail(),$user->getPassword());
-//        $this->user->setRole($this->roleService->getRoleById($this->user->getRoleId()));
-//        return $this->user;
-//    }
-//    public function updateUser(Utilisateur $user){
-//
-//        $this->user= $this->userRepository->update($user);
-//
-//    }
-//
-
-
+    public function findByEmailAndPassword(Utilisateur $user)
+    {
+        $user = $this::getByEmailAndPassword($user->getEmail(), $user->getPassword());
+        $user->setRole($this->role->getRoleById($user->getRoleId()));
+        return $user;
+    }
 }
-//
-//$model = new Utilisateur();
-//$arrayTest = ['firstname'=>'test','lastname'=>'test','age'=>20,'Email'=>'test@test.com','password'=>'test' ];
-//$model ->create('Utilisateurs',$arrayTest);
