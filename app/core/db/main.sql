@@ -36,6 +36,8 @@ Collaboration interne : Il travaille en étroite collaboration avec les équipes
 
 
 select * from Utilisateurs;
+
+
 select * from Roles;
 
 drop table Utilisateurs;

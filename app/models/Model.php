@@ -1,13 +1,11 @@
 <?php
 //include'../core/db/Database.php';
-class Model{
+abstract class Model{
 
     public function __construct()
     {
     }
-
-
-    public function create($tablename, $params)
+    public function create($tablename,$params)
     {
         $columns = [];
         $values = [];
@@ -120,8 +118,8 @@ class Model{
             $stmt -> execute();
             //  var_dump($query);
             $result = $stmt->fetchObject(substr($tablename,0,-1));
-            // var_dump($result);
-            // die();
+             var_dump($result);
+             die();
             return $result ;
         }catch(PDOException $e){
             echo("Error:" . $e);
@@ -131,9 +129,22 @@ class Model{
 
     }
 
+    public function getbyname($tablename,$name){
+        try{
+            $query="SELECT * FROM " . $tablename . " WHERE name = " . $name . " ;";
+            $stmt = Database::getInstance()->getConnection()->prepare($query);
+            $stmt -> execute();
+            //  var_dump($query);
+            $result = $stmt->fetchObject(substr($tablename,0,-1));
+            return $result ;
+        }catch(PDOException $e){
+            echo("Error:" . $e);
+        }
+    }
+
+
 
 
 }
-$model = new Model();
 
 ?>
