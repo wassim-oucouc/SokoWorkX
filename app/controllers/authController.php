@@ -13,6 +13,7 @@ class authController{
 
     public function register(RegisterForm $registerForm) {
         try {
+
             $user = $this->authModel->register($registerForm);
             return $user;
         }catch (Exception $e) {

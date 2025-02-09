@@ -11,6 +11,8 @@ class authModel{
 
     public function register( $registerForm):Utilisateur{
         $this->validation($registerForm);
+        $registerForm->password=password_hash($registerForm->password, PASSWORD_DEFAULT);
+
         $role= $this->role->findByName($registerForm->rolename);
         $this->user->instance(
             $registerForm->name,
@@ -39,6 +41,13 @@ class authModel{
         $user = $this->user->findByEmailAndPassword($this->user);
         // var_dump($user);
         // die;
+        if(password_verify($user->getPassword(),$form->password)){
+           echo'you are logged in';
+        }else{
+            return false;
+        }
+
+
         if ($user->getId() == 0) {
             throw new Exception("Email ou le mot de passe incorrect");
         }
