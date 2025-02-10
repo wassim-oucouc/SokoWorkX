@@ -2,6 +2,7 @@
 //include'../core/db/Database.php';
 
 namespace app\models;
+
 abstract class Model{
 
     public function __construct()
@@ -122,6 +123,7 @@ abstract class Model{
             $stmt->execute();
             //  var_dump($query);
             $result = $stmt->fetchObject(substr($tablename, 0, -1));
+
 
             return $result;
         } catch (PDOException $e) {

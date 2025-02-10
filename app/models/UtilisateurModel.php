@@ -188,10 +188,11 @@ class Utilisateur extends Model
     }
 
 
-    public function getByEmailAndPassword($email, $password)
+
+    public function getByEmailAndPassword($email)
     {
         try {
-            $query = "SELECT id, name, lastName, email, phone, photo, roleId, password FROM utilisateurs WHERE email = '" . $email . "' AND password = '" . $password . "';";
+            $query = "SELECT id, name, lastName, email, phone, photo, roleId, password FROM utilisateurs WHERE email = '" . $email . "';";
             $stmt = Database::getInstance()->getConnection()->prepare($query);
             $stmt->execute();
             $result = $stmt->fetchObject(Utilisateur::class);
@@ -208,7 +209,7 @@ class Utilisateur extends Model
 
     public function findByEmailAndPassword(Utilisateur $user)
     {
-        $user = $this::getByEmailAndPassword($user->getEmail(), $user->getPassword());
+        $user = $this::getByEmailAndPassword($user->getEmail());
         $user->setRole($this->role->getRoleById($user->getRoleId()));
         return $user;
     }
