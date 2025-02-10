@@ -1,13 +1,11 @@
 <?php
 //include'../core/db/Database.php';
-class Model{
+abstract class Model{
 
     public function __construct()
     {
     }
-
-
-    public function create($tablename, $params)
+    public function create($tablename,$params)
     {
         $columns = [];
         $values = [];
@@ -106,34 +104,46 @@ class Model{
             // var_dump($result);
             // die();
 
-            return $result ;
+
         }catch(PDOException $e){
             echo("Error:" . $e);
         }
+        return $result ;
     }
 
-    public function getById($tablename,$id){
+    public function getById($tablename,$id)
+    {
 
+        try {
+            $query = "SELECT * FROM " . $tablename . " WHERE id = " . $id . " ;";
+            $stmt = Database::getInstance()->getConnection()->prepare($query);
+            $stmt->execute();
+            //  var_dump($query);
+            $result = $stmt->fetchObject(substr($tablename, 0, -1));
+
+            return $result;
+        } catch (PDOException $e) {
+            echo("Error:" . $e);
+        }
+
+    }
+
+    public function getbyname($tablename,$name){
         try{
-            $query="SELECT * FROM " . $tablename . " WHERE id = " . $id . " ;";
+            $query="SELECT * FROM " . $tablename . " WHERE name = " . $name . " ;";
             $stmt = Database::getInstance()->getConnection()->prepare($query);
             $stmt -> execute();
             //  var_dump($query);
             $result = $stmt->fetchObject(substr($tablename,0,-1));
-            // var_dump($result);
-            // die();
             return $result ;
         }catch(PDOException $e){
             echo("Error:" . $e);
         }
-
-
-
     }
 
 
 
+
 }
-$model = new Model();
 
 ?>
