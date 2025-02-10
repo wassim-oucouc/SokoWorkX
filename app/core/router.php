@@ -8,20 +8,23 @@ class Router
     public function __construct()
     {
         $url = $this->getUrl();
+      
         // [user,edit,2]
-        $url[0]='user';
         if (isset($url[0])) {
-            $controllerClass = ucwords($url[0]);         //$url[0]='User'; uppercase first element
+            // var_dump($url[0]);
+            // die();
+            $controllerClass = ucwords($url[0]);  
+            // var_dump( $controllerClass);
+            //$url[0]='User'; uppercase first element
+            // var_dump($controllerClass);
 
-
-
-            if (class_exists('\\app\\controllers\\' . $controllerClass . 'Controller')) { //UserController if exist or not
-                $this->controller = $controllerClass;
+            if (class_exists('../app/controllers/AuthController')) { //UserController if exist or not
+             echo "hello";
     
             }
 
-            $controllerClass = '\\app\\controllers\\' . $this->controller . 'Controller'; //UserController
-            $this->controller = new $controllerClass;
+            // $controllerClass = '.././app/controllers/AuthController.php'; //UserController
+            // $this->controller = new $controllerClass;
             // $user = new UserController;
 
             if (isset($url[1])) {                          // [user,edit,2] 
@@ -48,7 +51,7 @@ class Router
             $this->controller = new $this->controller;
         }
 
-        call_user_func_array([$this->controller, $this->method], $this->param);
+        // call_user_func_array([$this->controller, $this->method], $this->param);
     }
     private function convertArray($array)
     {

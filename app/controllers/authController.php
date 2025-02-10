@@ -3,7 +3,7 @@ include'../http/registerform.php';
 include'../http/loginform.php';
 include'UtilisateurControllers.php';
 include'../model/AuthModel.php';
-class authController{
+class AuthController{
     private UtilisateurController $utilisateurController;
     private AuthModel $authModel;
     public function __construct() {
