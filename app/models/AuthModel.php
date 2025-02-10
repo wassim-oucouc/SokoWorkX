@@ -1,5 +1,10 @@
 <?php
 
+
+namespace app\models;
+
+
+
 class authModel{
     private Utilisateur $user;
     private Role $role;
@@ -11,7 +16,9 @@ class authModel{
 
     public function register( $registerForm):Utilisateur{
         $this->validation($registerForm);
+
         $registerForm->password=password_hash($registerForm->password, PASSWORD_DEFAULT);
+
 
         $role= $this->role->findByName($registerForm->rolename);
         $this->user->instance(

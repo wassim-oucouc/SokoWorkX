@@ -188,6 +188,7 @@ class Utilisateur extends Model
     }
 
 
+
     public function getByEmailAndPassword($email)
     {
         try {
