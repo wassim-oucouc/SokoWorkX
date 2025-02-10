@@ -3,7 +3,7 @@ include'../http/registerform.php';
 include'../http/loginform.php';
 include'UtilisateurControllers.php';
 include'../model/AuthModel.php';
-class AuthController{
+class authController{
     private UtilisateurController $utilisateurController;
     private AuthModel $authModel;
     public function __construct() {
@@ -13,6 +13,7 @@ class AuthController{
 
     public function register(RegisterForm $registerForm) {
         try {
+
             $user = $this->authModel->register($registerForm);
             return $user;
         }catch (Exception $e) {

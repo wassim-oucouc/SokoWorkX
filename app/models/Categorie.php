@@ -1,5 +1,7 @@
 <?php
 
+namespace app\models;
+
 class Categorie
 {
     private $Id;
@@ -44,7 +46,7 @@ class Categorie
         $this->Status = $status;
     }
 
-    
+
 }
 
 

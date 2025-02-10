@@ -1,5 +1,7 @@
 <?php
+require_once('../vendor/autoload.php');
 
+use app\controllers\AuthController;
 class Router
 {
     private $controller;
@@ -18,7 +20,7 @@ class Router
             //$url[0]='User'; uppercase first element
             // var_dump($controllerClass);
 
-            if (class_exists('../app/controllers/AuthController')) { //UserController if exist or not
+            if (class_exists('AuthController')) { //UserController if exist or not
              echo "hello";
     
             }

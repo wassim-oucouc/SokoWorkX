@@ -1,5 +1,8 @@
 <?php
 
+namespace app\models;
+
+
 class authModel{
     private Utilisateur $user;
     private Role $role;

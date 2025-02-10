@@ -1,0 +1,15 @@
+{
+    "name": "youcode/soko-work-x",
+    "autoload": {
+        "psr-4": {
+            "app\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "wassim",
+            "email": "wassimoucouc2@gmail.com"
+        }
+    ],
+    "require": {}
+}

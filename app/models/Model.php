@@ -1,5 +1,7 @@
 <?php
 //include'../core/db/Database.php';
+
+namespace app\models;
 abstract class Model{
 
     public function __construct()
