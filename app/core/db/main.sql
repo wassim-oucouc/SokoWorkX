@@ -84,6 +84,3 @@ CREATE TABLE Evaluation(
     id_user INTEGER,
     Foreign Key (id_user) REFERENCES users(id)
 )
-
-
-
