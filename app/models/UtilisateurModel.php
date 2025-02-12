@@ -1,7 +1,13 @@
 <?php
 
-include_once ('Model.php');
-class Utilisateur extends Model
+namespace app\models;
+include_once ('../../vendor/autoload.php');
+
+use app\core\db\Database;
+use app\models\Role;
+use PDOException;
+
+class Utilisateur
 {
 
     private int $id = 0;
@@ -13,12 +19,23 @@ class Utilisateur extends Model
     private string $photo;
     private Role $role;
     private int $roleId = 1;
+    private array $evalution;
     private $tablename = "utilisateurs";
 
     public function __construct()
     {
         parent::__construct();
         $this->role = new Role();
+    }
+
+    public function getEvalution(): array
+    {
+        return $this->evalution;
+    }
+
+    public function setEvalution(array $evalution): void
+    {
+        $this->evalution = $evalution;
     }
 //    public function create($tablename,$params)
 //    {
@@ -168,7 +185,20 @@ class Utilisateur extends Model
     public function create($tablename, $params)
     {
 
-        parent::create($this->tablename, $params);
+        try{
+            $query="SELECT * FROM users ;";
+            $stmt = Database::getInstance()->getConnection()->prepare($query);
+            $stmt -> execute();
+            // var_dump($query);
+            $result = $stmt->fetchall(PDO::FETCH_CLASS,substr($tablename,0,-1));
+            // var_dump($result);
+            // die();
+
+
+        }catch(PDOException $e){
+            echo("Error:" . $e);
+        }
+        return $result ;
     }
 
     public function createUser(Utilisateur $utilisateur): Utilisateur
@@ -189,7 +219,7 @@ class Utilisateur extends Model
 
 
 
-    public function getByEmailAndPassword($email)
+    public function getByEmail($email)
     {
         try {
             $query = "SELECT id, name, lastName, email, phone, photo, roleId, password FROM utilisateurs WHERE email = '" . $email . "';";
@@ -207,10 +237,22 @@ class Utilisateur extends Model
         }
     }
 
-    public function findByEmailAndPassword(Utilisateur $user)
+    public function findByEmail(Utilisateur $user)
     {
-        $user = $this::getByEmailAndPassword($user->getEmail());
+        $user = $this::getByEmail($user->getEmail());
         $user->setRole($this->role->getRoleById($user->getRoleId()));
         return $user;
+    }
+    public function findById(int $id){
+        try{
+        $query = "SELECT * FROM utilisateurs WHERE id = '" . $id . "';";
+        $stmt = Database::getInstance()->getConnection()->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetchObject(Utilisateur::class);}
+        catch(PDOException $e){
+            echo("Error:" . $e);
+                $result = new Utilisateur();
+            }
+            return $result;
     }
 }

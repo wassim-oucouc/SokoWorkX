@@ -1,6 +1,9 @@
 <?php
 
-class Role extends Model {
+namespace App\Model;
+include_once ('../../vendor/autoload.php');
+
+class Role {
 
     private int $id=1;
     private string $name;
@@ -8,7 +11,6 @@ class Role extends Model {
     private string $Logo ;
 
     public function __construct(){
-        parent::__construct();
     }
 
 
@@ -64,20 +66,25 @@ class Role extends Model {
         return "(Role) => id : " . $this->id . " , name : " . $this->name . " , description : " . $this ->Description . " , logo : " . $this ->Logo ."";
     }
 
-    public function getById($tablename, $id): Role
+    public function getById($id): Role
     {
         try {
-            return parent::getById($tablename, $id);
+          $query='Select * from roles where id= ' .$id. ';';
+          $stmt= Database::getInstance()->getConnection()->prepare($query);
+          $stmt->execute();
+          $result=$stmt->fetchObject(role::class);
+          return $result;
         }
         catch (Exception $e){
-            echo'user not found:'.$e;
+            echo'role not found:'.$e;
             return new Role();
         }
+
     }
 
-    public function getRoleById($RoleId): Role
+    public function getRoleById($Id): Role
     {
-    return $this->getById('Roles', $RoleId);
+    return $this->getById($Id);
     }
 
 }
