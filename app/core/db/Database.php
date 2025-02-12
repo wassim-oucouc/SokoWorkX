@@ -1,5 +1,5 @@
 <?php
-
+namespace app\core\db;
 
 
 class Database {

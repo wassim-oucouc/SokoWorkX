@@ -1,6 +1,12 @@
 <?php
 namespace app\models;
-class Offres
+include_once('../../vendor/autoload.php');
+
+use app\core\db\Database;
+use PDOException;
+
+
+class propositionModel
 {
     private $Id;
     private $Montantdevis;
@@ -76,6 +82,11 @@ class Offres
     {
          $this->Publication = $publication;
     }
+
+
+
+
+
 }
 
 ?>
