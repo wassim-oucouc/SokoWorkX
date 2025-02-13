@@ -1,7 +1,7 @@
 <?php
 
 include_once ('Model.php');
-class Utilisateur extends Model
+class UtilisateurController extends Model
 {
 
     private int $id = 0;

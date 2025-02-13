@@ -1,72 +1,70 @@
 <?php
+namespace app\core;
 require_once('../vendor/autoload.php');
+require_once('../app/controllers/FreelancerController.php');
+use app\controllers\FreelancerController;
 
-use app\controllers\AuthController;
-class Router
-{
+
+
+
+
+
+
+class Router{
     private $controller;
     private $method;
     private $param = [];
     public function __construct()
     {
+       
+      
         $url = $this->getUrl();
       
         // [user,edit,2]
         if (isset($url[0])) {
             // var_dump($url[0]);
             // die();
-            $controllerClass = ucwords($url[0]);  
-            // var_dump( $controllerClass);
+            $controllerClass = ucwords($url[0]);
+            // echo $controllerClass;
+            $fullcontroller = $controllerClass . 'Controller';
+            $pathControllerClass ="app\\controllers\\" . $controllerClass . "Controller";
             //$url[0]='User'; uppercase first element
             // var_dump($controllerClass);
 
-            if (class_exists('AuthController')) { //UserController if exist or not
-             echo "hello";
-    
+            if(class_exists($pathControllerClass)) {
+        $this->controller = $fullcontroller;
+        $this->controller = new $fullcontroller();
+        echo "jdsu";
+        var_dump($this->controller);
             }
 
             // $controllerClass = '.././app/controllers/AuthController.php'; //UserController
             // $this->controller = new $controllerClass;
             // $user = new UserController;
-
-            if (isset($url[1])) {                          // [user,edit,2] 
+            if (isset($url[1])){                          // [user,edit,2] 
 
                 //  $url[1]='edit'; methode
 
-                if (method_exists($this->controller, $url[1])) { // accept  controller and methode
+                if(method_exists($pathControllerClass,$url[1])){
                     $this->method = $url[1];
+                    $method = $this->method;
                 }
             }
-
-
-            if (!empty($_REQUEST)) {
-                // $_REQUEST return array assoc des param 
-              // [id=>1]
-               
-
-
-                $this->convertArray($_REQUEST);
-            } else {
-                $this->param = [];
-            }
-        } else {
-            $this->controller = new $this->controller;
+           
+      
         }
+        $instancecontroller = new $this->controller();
+        $instancecontroller->$method();
 
-        // call_user_func_array([$this->controller, $this->method], $this->param);
+      
     }
+
     private function convertArray($array)
     {
         foreach ($array as $value) {
             array_push($this->param, $value);
         }
     }
-    private function getBasePaths()
-    {
-        $path = $_SERVER['HTTP_REFERER'];
-        header("Location: $path ");
-    }
-
     public function GetUrl()
     {
         if(empty($_SERVER['REQUEST_URI']))

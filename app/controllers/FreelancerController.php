@@ -1,4 +1,6 @@
 <?php
+namespace app\controllers;
+
 
 class FreelancerController
 {
@@ -8,10 +10,10 @@ class FreelancerController
     {
 
     }
-    public function FetchProfile()
+    public function Profile()
     {
-        session_start();
-        
+        require_once('../app/views/Freelance/freelance.php');
+
     }
 }
 

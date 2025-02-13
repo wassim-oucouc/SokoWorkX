@@ -43,6 +43,22 @@ CREATE TABLE Catégorie(
 
 
 
+CREATE TABLE offres(
+        id SERIAL PRIMARY KEY,
+        Title VARCHAR(60),
+        Description VARCHAR(60),
+        Budget INTEGER,
+        Photo VARCHAR(80),
+        duréé INTEGER,
+        Status VARCHAR(80),
+        id_categorie INTEGER,
+        id_client INTEGER,
+        Foreign Key (id_categorie) REFERENCES Catégorie(id),
+        Foreign Key (id_client) REFERENCES users(id)
+)
+
+drop table Publication;
+
 CREATE TABLE Publication(
         id SERIAL PRIMARY KEY,
         Title VARCHAR(60),
@@ -57,15 +73,7 @@ CREATE TABLE Publication(
         Foreign Key (id_client) REFERENCES users(id)
 )
 
-CREATE TABLE Offers(
-    id SERIAL PRIMARY KEY,
-    MontantDevis INTEGER,
-    DuréeEstimeée INTEGER,
-    Status VARCHAR(50),
-    DateSoumission TIMESTAMP,
-    id_publication INTEGER,
-    Foreign Key (id_publication) REFERENCES Publication(id)
-)
+
 
 CREATE TABLE Compétences_Freelancer(
     id SERIAL PRIMARY KEY,

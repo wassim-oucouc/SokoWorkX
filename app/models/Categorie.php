@@ -46,6 +46,12 @@ class Categorie
         $this->Status = $status;
     }
 
+    public function findIdbyname($name)
+    {
+        $query = "SELECT * From cateégorie were nom = :nom";
+        $smt
+    }
+
 
 }
 

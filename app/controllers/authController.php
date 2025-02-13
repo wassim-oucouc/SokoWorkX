@@ -1,8 +1,13 @@
 <?php
+namespace app\controllers;
 include'../http/registerform.php';
 include'../http/loginform.php';
 include'UtilisateurControllers.php';
 include'../model/AuthModel.php';
+
+
+
+
 class authController{
     private UtilisateurController $utilisateurController;
     private AuthModel $authModel;
@@ -19,6 +24,11 @@ class authController{
         }catch (Exception $e) {
               echo"error:".$e;
         }
+    }
+
+    public function test()
+    {
+        return "this is for test controller many thanks looking help!";
     }
 
 
