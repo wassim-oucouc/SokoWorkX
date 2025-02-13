@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Model;
-include_once ('../../vendor/autoload.php');
-
+namespace app\models;
+use app\core\db\Database;
+use PDOException;
 class Role {
 
     private int $id=1;
@@ -46,18 +46,20 @@ class Role {
         return $this->Logo;
     }
 
-    public function getbyname($tablename, $name)
-    {
 
-        return parent::getbyname($tablename, $name);
-    }
 
     public function findByName($roleName):Role{
-        $tablename='Roles';
-        $role = $this->getbyname('Roles',$roleName);
-        // var_dump($result);
-        // die();
-        return $role;
+        try {
+            $query='Select * from roles where Nom= ' .$roleName. ';';
+            $stmt= Database::getInstance()->getConnection()->prepare($query);
+            $stmt->execute();
+            $result=$stmt->fetchObject(role::class);
+            return $result;
+        }
+        catch (PDOException $e){
+            echo'role not found:'.$e;
+            return new Role();
+        }
     }
 
 
@@ -66,25 +68,18 @@ class Role {
         return "(Role) => id : " . $this->id . " , name : " . $this->name . " , description : " . $this ->Description . " , logo : " . $this ->Logo ."";
     }
 
-    public function getById($id): Role
+    public function getRoleById($id): Role
     {
         try {
           $query='Select * from roles where id= ' .$id. ';';
-          $stmt= Database::getInstance()->getConnection()->prepare($query);
+          $stmt = Database::getInstance()->getConnection()->prepare($query);
           $stmt->execute();
           $result=$stmt->fetchObject(role::class);
           return $result;
         }
-        catch (Exception $e){
+        catch (PDOException $e){
             echo'role not found:'.$e;
             return new Role();
         }
-
     }
-
-    public function getRoleById($Id): Role
-    {
-    return $this->getById($Id);
-    }
-
 }

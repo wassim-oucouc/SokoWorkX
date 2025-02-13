@@ -3,6 +3,9 @@
 
 namespace app\models;
 
+use app\http\LoginForm;
+use app\models\Utilisateur;
+use app\models\Role;
 
 
 class authModel{
@@ -11,7 +14,7 @@ class authModel{
     public function __construct()
     {
         $this->user = new Utilisateur();
-        $this ->role=new Role();
+        $this->role=new Role();
     }
 
     public function register( $registerForm):Utilisateur{
@@ -43,7 +46,7 @@ class authModel{
 
 
 
-    public function login(LoginForm $form) {
+    public function login( LoginForm $form) {
         $this->user->instance($form->Email,$form->password);
         $user = $this->user->findByEmailAndPassword($this->user);
         // var_dump($user);

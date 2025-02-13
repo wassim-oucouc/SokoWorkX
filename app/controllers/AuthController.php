@@ -1,8 +1,10 @@
 <?php
-include'../http/registerform.php';
-include'../http/loginform.php';
-include'UtilisateurControllers.php';
-include'../model/AuthModel.php';
+namespace app\controllers;
+
+use app\controllers\UtilisateurController;
+use app\models\authModel;
+use app\http\LoginForm;
+use app\http\RegisterForm;
 class authController{
     private UtilisateurController $utilisateurController;
     private AuthModel $authModel;
@@ -16,7 +18,7 @@ class authController{
 
             $user = $this->authModel->register($registerForm);
             return $user;
-        }catch (Exception $e) {
+        }catch (PDOException $e) {
               echo"error:".$e;
         }
     }
@@ -24,12 +26,16 @@ class authController{
 
 
 
-    public function login(RegisterForm $logInForm) {
-
+    public function login($email,$password) {
+//         var_dump($email,$password);
+        $loginForm = new LoginForm() ;
+        $loginForm->intance($email,$password);
+//        var_dump($loginForm);
+//        die;
         try {
-            $user = $this->authModel->login($logInForm);
+            $user = $this->authModel->login( $loginForm);
             return $user;
-        } catch (Exception $e) {
+        } catch (PDOException $e) {
             echo"error!:".$e;
         }
 

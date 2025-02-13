@@ -1,7 +1,7 @@
 <?php
 
 namespace app\models;
-include_once ('../../vendor/autoload.php');
+
 
 use app\core\db\Database;
 use app\models\Role;
@@ -24,7 +24,6 @@ class Utilisateur
 
     public function __construct()
     {
-        parent::__construct();
         $this->role = new Role();
     }
 

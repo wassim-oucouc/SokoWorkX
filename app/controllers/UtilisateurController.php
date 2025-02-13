@@ -1,6 +1,7 @@
 <?php
 
-include_once '../model/Utilisateur.php';
+namespace app\controllers;
+use app\models\Utilisateur;
 
 class  UtilisateurController{
 

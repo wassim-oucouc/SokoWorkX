@@ -1,13 +1,15 @@
 <?php
+namespace app\controllers;
+
 
 use app\models\Offer;
 
 class OfferController{
 
 
-    private $offer;
+    private $Offer;
     public function __construct(){
-        $this->offer = new Offer();
+        $this->Offer = new Offer();
     }
 
 
@@ -15,9 +17,10 @@ class OfferController{
     public function getAllOffer(){
         $Offers = $this->Offer->findAllOffers();
         foreach ($Offers as $Offer){
-            $Offer->setClient($this->Client->findById($Offer->getClientId()));
-            $Offer->setCategorie($this->Categorie->findById($Offer->getCategorieId()));
+            $Offer->setClient($this->Offer -> getClient()->findById($Offer->getClientId()));
+            $Offer->setCategorie($this->Offer->getCategorie()->findById($Offer->getCategorieId()));
         }
         return $Offers;
     }
 }
+

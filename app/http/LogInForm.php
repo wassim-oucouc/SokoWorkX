@@ -1,5 +1,5 @@
 <?php
-// include('../../views/index.html');
+namespace app\http;
 class LoginForm{
     public string $Email;
     public string $password;
@@ -11,7 +11,8 @@ class LoginForm{
     public function __call($name, $arguments)
     {
         if ($name="instance" ){
-            if(count($arguments)==7){
+//            echo'here';
+            if(count($arguments)==2){
             $this -> Email =$arguments[0];
             $this -> password = $arguments[1];
             } }
